@@ -11,3 +11,32 @@ class ArtefattoDAO:
         pass
 
     # TODO
+    cnx= ConnessioneDB.get_connection()
+    artefatti= []
+    if cnx is not None:
+        cursor= cnx.cursor()
+        query= """ SELECT * FROM artefatto WHERE epoca = COALESCE(%s, epoca) and museo = COALESCE(%s, museo)"""
+        cursor.execute(query)
+        for row in cursor:
+            artefatti.append(row)
+        cursor.close()
+        cnx.close()
+    else:
+        print('impossibile connettersi')
+
+    cnx = ConnessioneDB.get_connection()
+    epoche = []
+    if cnx is not None:
+        cursor = cnx.cursor()
+        query2 = """ SELECT DISTINCT epoca FROM artefatto"""
+        cursor.execute(query2)
+        for row in cursor:
+            epoche.append(row)
+        cursor.close()
+        cnx.close()
+    else:
+        print('impossibile connettersi')
+
+
+
+
